@@ -591,241 +591,166 @@ body.dark-mode main section:nth-of-type(odd) {
 
 
 
-/* about me section*/
-
-
-
-
-h2,
-h3 {
-    /* Light Mode Default Colors for Headings */
-    color:  rgb(40, 97, 255) ;
-    /* --heading-color-light */
-}
-
-body.dark-mode h2,
-h3 {
-    color:  rgb(103, 143, 255) ;
-
-}
-
-/* Light Mode Default styles for the about content card */
-.about-section .about-content {
-    background-color: #ffffff;
-    /* --card-background-light */
-    border: 1px solid #e0e0e0;
-    /* --border-color-light */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    /* Subtle shadow */
-    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-
-}
-
-/* --- General Layout and Responsive Styling --- */
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
-}
+/* ==========================================================
+   About Section
+   ========================================================== */
 
 .about-section {
-    padding: 60px 0;
-    text-align: center;
+    --ab-text: #1F2328;
+    --ab-muted: #4A5260;
+    --ab-border: #D9DDE3;
+    --ab-accent: rgb(40, 97, 255);   /* your light-mode heading blue */
+
+    padding: 96px 0;
+    text-align: left;
+    color: var(--ab-text);
+}
+
+body.dark-mode .about-section,
+body[data-theme='dark'] .about-section {
+    --ab-text: #F1F3F5;
+    --ab-muted: #B4BAC4;
+    --ab-border: #4A5158;
+    --ab-accent: rgb(103, 143, 255); /* your dark-mode heading blue */
+}
+
+.about-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 24px 80px;
+    align-items: start;
+}
+
+/* Left: label + heading + small portrait */
+.about-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ab-accent);
+}
+
+.about-label::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background-color: var(--ab-accent);
+    border-radius: 2px;
 }
 
 .about-section h2 {
-    font-size: 2.8em;
-    margin-bottom: 40px;
-    position: relative;
-    display: inline-block;
+    display: block;
+    position: static;
+    margin: 0 0 32px;
+    max-width: 14em;
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ab-text);
 }
 
 .about-section h2::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -10px;
-    transform: translateX(-50%);
-    width: 70px;
-    height: 4px;
-    background-color:rgb(103, 143, 255);
-    /* --accent-color-light */
-    border-radius: 2px;
-    transition: background-color 0.3s ease;
+    content: none;
 }
 
-/* Dark mode specific color for the heading underline */
-body[data-theme='dark'] .about-section h2::after {
-    background-color:rgb(103, 143, 255);
-    /* --accent-color-dark */
-}
-
-.about-content {
+.about-figure {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    gap: 40px;
-    padding: 40px;
-    border-radius: 12px;
-}
-
-.about-image-wrapper {
-    flex: 1;
-    min-width: 250px;
-    max-width: 350px;
-    text-align: center;
+    gap: 16px;
+    margin: 0;
 }
 
 .about-image {
-    width: 100%;
-    height: auto;
-    max-width: 300px;
-    border-radius: 50%;
-    border: 6px solid #3498db;
-    /* --accent-color-light */
-    object-fit: cover;
+    width: 72px;
+    height: 72px;
+    flex: none;
     aspect-ratio: 1 / 1;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    transition: border-color 0.3s ease;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid var(--ab-border);
+    box-shadow: none;
 }
 
-/* Dark mode specific color for the image border */
-body[data-theme='dark'] .about-image {
-    border: 6px solid #8fd3f4;
-    /* --accent-color-dark */
+.about-figure figcaption {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--ab-text);
 }
 
-.about-text-content {
-    flex: 2;
-    min-width: 300px;
-    text-align: left;
-    line-height: 1.7;
+.about-figure figcaption span {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--ab-muted);
 }
 
-.about-text-content h3 {
-    font-size: 2em;
-    margin-bottom: 20px;
+/* Right: body copy */
+.about-body {
+    max-width: 62ch;
 }
 
-.about-text-content p {
-    margin-bottom: 15px;
-    font-size: 1.1em;
-    color: #031469;
+.about-body p {
+    margin: 0 0 24px;
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: var(--ab-muted);
 }
 
-body.dark-mode .about-text-content p {
-    color: #031469;
-
+.about-body p:first-child {
+    color: var(--ab-text);
 }
 
-
-
-
-.about-text-content p:last-child {
+.about-body p:last-child {
     margin-bottom: 0;
 }
 
-/* --- Responsive Design --- */
+.about-highlight {
+    font-weight: 600;
+    color: var(--ab-text);
+    background: linear-gradient(transparent 62%, color-mix(in srgb, var(--ab-accent) 22%, transparent) 62%);
+}
+
+/* Subtle reveal — pure CSS, no JS; ignored where unsupported or reduced motion is on */
+@media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+        .about-intro,
+        .about-body {
+            animation: about-reveal linear both;
+            animation-timeline: view();
+            animation-range: entry 0% entry 40%;
+        }
+        .about-body { animation-range: entry 5% entry 45%; }
+    }
+}
+
+@keyframes about-reveal {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* Tablet */
 @media (max-width: 992px) {
-    .about-content {
-        flex-direction: column;
-        padding: 30px;
-        gap: 30px;
+    .about-section { padding: 72px 0; }
+    .about-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
     }
-
-    .about-image-wrapper {
-        max-width: 250px;
-    }
-
-    .about-image {
-        max-width: 200px;
-    }
-
-    .about-text-content {
-        text-align: center;
-        min-width: unset;
-    }
-
-    .about-text-content h3 {
-        font-size: 1.8em;
-    }
-
-    .about-text-content p {
-        font-size: 1em;
-    }
-
-    .about-section h2 {
-        font-size: 2.2em;
-    }
+    .about-section h2 { font-size: 2rem; margin-bottom: 24px; }
+    .about-body { max-width: 65ch; }
 }
 
-@media (max-width: 768px) {
-    .about-section {
-        padding: 40px 0;
-    }
-
-    .about-section h2 {
-        font-size: 2em;
-        margin-bottom: 30px;
-    }
-
-    .about-content {
-        padding: 20px;
-        gap: 20px;
-    }
-
-    .about-image-wrapper {
-        min-width: 200px;
-    }
-
-    .about-image {
-        width: 150px;
-        height: 150px;
-    }
-
-    .about-text-content h3 {
-        font-size: 1.6em;
-    }
-
-    .about-text-content p {
-        font-size: 0.95em;
-    }
+/* Mobile */
+@media (max-width: 576px) {
+    .about-section { padding: 56px 0; }
+    .about-section h2 { font-size: 1.75rem; }
+    .about-body p { font-size: 1rem; line-height: 1.7; margin-bottom: 20px; }
 }
-
-@media (max-width: 480px) {
-    .about-section {
-        padding: 30px 0;
-    }
-
-    .about-section h2 {
-        font-size: 1.8em;
-    }
-
-    .about-content {
-        padding: 15px;
-    }
-
-    .about-image-wrapper {
-        min-width: unset;
-        width: 120px;
-    }
-
-    .about-image {
-        width: 120px;
-        height: 120px;
-        border-width: 4px;
-    }
-
-    .about-text-content h3 {
-        font-size: 1.4em;
-    }
-
-    .about-text-content p {
-        font-size: 0.9em;
-    }
-}
-
 
 
 
