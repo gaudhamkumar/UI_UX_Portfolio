@@ -1,0 +1,319 @@
+
+/* --- Skills Section Styling --- */
+
+.skills-section {
+    padding: 90px 0;
+    /* More vertical padding for a grander feel */
+    text-align: center;
+    background-color: #F0F2F5;
+    /* Very light grey background for the section */
+    color: #333333;
+    /* Light mode text color */
+    transition: background-color 0.4s ease, color 0.4s ease;
+    /* Smoother transitions */
+}
+
+.skills-section h2 {
+    font-size: 3.2em;
+    /* Even larger heading */
+    margin-bottom: 60px;
+    /* More space below heading */
+    position: relative;
+    display: inline-block;
+    color:  #4a41f7;
+    /* Deep blue-grey heading for light mode */
+    letter-spacing: 1px;
+    /* Slightly spaced out letters */
+}
+
+.skills-section h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -18px;
+    /* Adjust underline position */
+    transform: translateX(-50%);
+    width: 100px;
+    /* Wider underline */
+    height: 6px;
+    /* Thicker underline */
+    background-color: #6C63FF;
+    /* A vibrant purple accent for light mode */
+    border-radius: 4px;
+    transition: background-color 0.4s ease;
+}
+
+.skills-categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+    /* Increased space between skill categories */
+}
+
+.skill-category {
+    background: linear-gradient(145deg, #FFFFFF, #F0F2F5);
+    /* Subtle gradient for light mode cards */
+    border: none;
+    /* No explicit border, rely on shadow */
+    border-radius: 20px;
+    /* More rounded corners */
+    padding: 30px;
+    /* Generous padding inside category cards */
+    flex: 1 1 calc(50% - 50px);
+    /* Two columns on larger screens */
+    max-width: calc(50% - 25px);
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.08), -8px -8px 15px rgba(255, 255, 255, 0.7);
+    /* Neumorphic-like shadow */
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+    display: flex;
+    /* Use flex for internal alignment */
+    flex-direction: column;
+    align-items: center;
+    /* Center content horizontally */
+}
+
+.skill-category h3 {
+    font-size: 2.4em;
+    /* Larger category headings */
+    margin-bottom: 35px;
+    color:  #4a41f7;
+    /* Deep blue-grey heading for light mode */
+    position: relative;
+    letter-spacing: 0.5px;
+}
+
+.skill-category h3::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -12px;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: #4a41f7;
+    /* Accent for category heading underline */
+    transition: background-color 0.4s ease;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    /* Larger min-width for skill cards */
+    gap: 25px;
+    /* More space between skill cards */
+    justify-items: center;
+    width: 100%;
+    /* Ensure grid takes full width of category */
+}
+
+.skill-card {
+    background-color: #E0E2E6;
+    color: #4A5568;
+    padding: 18px 30px;
+    border-radius: 12px;
+    font-size: 1.15em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5), inset -2px -2px 5px rgba(255, 255, 255, 0.7);
+    /* Inner shadow for "pressed" look */
+}
+
+.skill-card:hover {
+    transform: translateY(-3px);
+    /* Subtle lift */
+    background-color: #D1D4D8;
+    /* Slightly darker on hover */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.8);
+    /* Outer shadow on hover */
+    color: #6C63FF;
+
+}
+
+/* --- Dark Mode for Skills Section --- */
+body.dark-mode .skills-section {
+    background-color: #2A2E33;
+    /* Dark background for the section */
+    color: #E0E0E0;
+    /* Dark mode text color */
+}
+
+body.dark-mode .skills-section h2 {
+    color: #FFFFFF;
+    /* Dark mode heading color */
+}
+
+body.dark-mode .skills-section h2::after {
+    background-color: #9B93FF;
+    /* Dark mode accent color (lighter purple) */
+}
+
+body.dark-mode .skill-category {
+    background: linear-gradient(145deg, #3A4048, #2A2E33);
+    /* Dark mode gradient for cards */
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.6), -8px -8px 15px rgba(60, 65, 70, 0.3);
+    /* Darker neumorphic shadow */
+}
+
+body.dark-mode .skill-category h3 {
+    color: #FFFFFF;
+    /* Dark mode heading color */
+}
+
+body.dark-mode .skill-category h3::after {
+    background-color: #9B93FF;
+    /* Dark mode accent for category heading underline */
+}
+
+body.dark-mode .skill-card {
+    background-color: #3D434B;
+    /* Darker base for skill cards in dark mode */
+    color: #C0C5CC;
+    /* Lighter text on skill card in dark mode */
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5), inset -2px -2px 5px rgba(60, 65, 70, 0.2);
+    /* Dark inner shadow */
+}
+
+body.dark-mode .skill-card:hover {
+    transform: translateY(-3px);
+    background-color: #4A5158;
+    /* Slightly darker on hover in dark mode */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5), -4px -4px 10px rgba(60, 65, 70, 0.3);
+    /* Dark outer shadow on hover */
+    color: #9B93FF;
+    /* Accent color on hover in dark mode */
+}
+
+
+/* --- Responsive Design for Skills Section --- */
+@media (max-width: 992px) {
+    .skills-section {
+        padding: 70px 0;
+    }
+
+    .skills-section h2 {
+        font-size: 2.8em;
+        margin-bottom: 50px;
+    }
+
+    .skills-section h2::after {
+        width: 90px;
+        height: 5px;
+    }
+
+    .skills-categories {
+        gap: 40px;
+    }
+
+    .skill-category {
+        flex: 1 1 calc(50% - 40px);
+        max-width: calc(50% - 20px);
+        padding: 35px;
+        border-radius: 18px;
+    }
+
+    .skill-category h3 {
+        font-size: 2em;
+        margin-bottom: 30px;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 20px;
+    }
+
+    .skill-card {
+        padding: 15px 25px;
+        font-size: 1.05em;
+        border-radius: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .skills-section {
+        padding: 60px 0;
+    }
+
+    .skills-section h2 {
+        font-size: 2.5em;
+        margin-bottom: 40px;
+    }
+
+    .skills-section h2::after {
+        width: 80px;
+        bottom: -15px;
+    }
+
+    .skills-categories {
+        gap: 30px;
+    }
+
+    .skill-category {
+        flex: 1 1 90%;
+        /* Single column on smaller screens */
+        max-width: 90%;
+        padding: 30px;
+        border-radius: 15px;
+    }
+
+    .skill-category h3 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .skill-category h3::after {
+        bottom: -10px;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+        gap: 18px;
+    }
+
+    .skill-card {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .skills-section {
+        padding: 50px 0;
+    }
+
+    .skills-section h2 {
+        font-size: 2.2em;
+        margin-bottom: 30px;
+    }
+
+    .skills-section h2::after {
+        width: 70px;
+        height: 4px;
+    }
+
+    .skill-category {
+        padding: 25px;
+        border-radius: 12px;
+    }
+
+    .skill-category h3 {
+        font-size: 1.6em;
+        margin-bottom: 20px;
+    }
+
+    .skill-category h3::after {
+        bottom: -8px;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        gap: 15px;
+    }
+
+    .skill-card {
+        padding: 10px 15px;
+        font-size: 0.9em;
+        border-radius: 8px;
+    }
+}
