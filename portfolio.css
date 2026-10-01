@@ -599,7 +599,7 @@ body.dark-mode main section:nth-of-type(odd) {
     --ab-text: #1F2328;
     --ab-muted: #4A5260;
     --ab-border: #D9DDE3;
-    --ab-accent: rgb(40, 97, 255);   /* your light-mode heading blue */
+    --ab-accent: #4a41f7;   /* your light-mode heading blue */
 
     padding: 96px 0;
     text-align: left;
@@ -627,9 +627,9 @@ body[data-theme='dark'] .about-section {
     align-items: center;
     gap: 12px;
     margin: 0 0 20px;
-    font-size: 0.8rem;
+    font-size: 3rem;
     font-weight: 600;
-    letter-spacing: 0.14em;
+    letter-spacing: 0 rem;
     text-transform: uppercase;
     color: var(--ab-accent);
 }
@@ -796,11 +796,11 @@ body.dark-mode .skills-section {
     display: block;
     position: static;
     margin: 0 0 14px;
-    font-size: 2.2rem;
+    font-size: 3rem;
     font-weight: 700;
     letter-spacing: -0.01em;
     line-height: 1.2;
-    color: var(--sk-text);
+    color: var(--sk-accent);
 }
 
 /* Small accent detail (replaces the thick underline) */
