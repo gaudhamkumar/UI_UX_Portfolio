@@ -1205,9 +1205,12 @@ body.dark-mode .skills-section {
   View More Button
 ========================= */
 
+
 .view-more-container {
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
     margin-top: 40px;
 }
 
