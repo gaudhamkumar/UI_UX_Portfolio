@@ -1220,10 +1220,10 @@ body.dark-mode .skills-section {
     justify-content: center;
     gap: 10px;
     padding: 12px 26px;
-    border: 1px solid #242021;
+    border: 1px solid #4a41f7;
     border-radius: 8px;
     background: transparent;
-    color: #242021;
+    color: #4a41f7;
     font-size: 15px;
     font-weight: 600;
     text-decoration: none;
@@ -1233,7 +1233,7 @@ body.dark-mode .skills-section {
 }
 
 .view-more-btn:hover {
-    background-color: #242021;
+    background-color: #4a41f7;
     color: #ffffff;
     transform: translateY(-2px);
 }
