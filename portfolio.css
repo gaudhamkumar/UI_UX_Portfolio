@@ -1122,6 +1122,7 @@ body.dark-mode .skills-section {
     transform: scale(1.05);
 }
 
+
 /* =========================
    CONTENT
 ========================= */
@@ -1204,39 +1205,40 @@ body.dark-mode .skills-section {
   View More Button
 ========================= */
 
-.view-more-container{
-    text-align:center;
-    margin-top:50px;
+.view-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
 }
 
-.view-more-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-
-    padding:14px 32px;
-
-    background:#6C63FF;
-    color:#fff;
-
-    text-decoration:none;
-    font-size:1rem;
-    font-weight:600;
-
-    border-radius:12px;
-
-    transition:all 0.3s ease;
+.view-more-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 26px;
+    border: 1px solid #242021;
+    border-radius: 8px;
+    background: transparent;
+    color: #242021;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.25s ease,
+                color 0.25s ease,
+                transform 0.25s ease;
 }
 
-.view-more-btn:hover{
-    background:#574fff;
-    color:#fff;
-
-    transform:translateY(-4px);
-
-    box-shadow:0 10px 25px rgba(108,99,255,0.25);
+.view-more-btn:hover {
+    background-color: #242021;
+    color: #ffffff;
+    transform: translateY(-2px);
 }
 
+.view-more-btn span {
+    font-size: 20px;
+    line-height: 1;
+}
 
 
 /* --- Dark Mode for Projects Section --- */
