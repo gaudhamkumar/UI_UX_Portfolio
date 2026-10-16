@@ -1,8 +1,9 @@
 
-// --- Global Variables for Typing Animation State ---
+ // --- Global Variables for Typing Animation State ---
 let phraseIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
+let typingTimer = null;
 
 const typingSpeed = 70;
 const deletingSpeed = 40;
@@ -23,25 +24,46 @@ const phraseGradients = [
     'linear-gradient(to right, #dc3545, #ff1493)'
 ];
 
-
 // --- Helper Functions ---
 
 function applyPhraseGradient() {
-    const dynamicTypingTextElement = document.getElementById('dynamic-typing-text');
-    if (!dynamicTypingTextElement) return;
+    const element = document.getElementById('dynamic-typing-text');
+    if (!element) return;
 
-    dynamicTypingTextElement.style.background = phraseGradients[phraseIndex];
-    dynamicTypingTextElement.style.backgroundSize = '200% 100%';
-    dynamicTypingTextElement.style.backgroundPosition = '0% 0';
+    element.style.backgroundImage = phraseGradients[phraseIndex];
+    element.style.backgroundSize = '200% 100%';
+    element.style.backgroundPosition = '0% 0';
+    element.style.backgroundClip = 'text';
+    element.style.webkitBackgroundClip = 'text';
+    element.style.color = 'transparent';
+    element.style.webkitTextFillColor = 'transparent';
 }
 
+function resetPhraseGradient() {
+    const element = document.getElementById('dynamic-typing-text');
+    if (!element) return;
+
+    element.classList.remove('wipe-effect');
+    element.style.color = 'transparent';
+    element.style.webkitTextFillColor = 'transparent';
+    element.style.backgroundImage = '';
+    element.style.background = '';
+    element.style.backgroundSize = '';
+    element.style.backgroundPosition = '';
+    element.style.backgroundClip = '';
+    element.style.webkitBackgroundClip = '';
+}
+
+// --- Typing Animation ---
 
 function typeDeleteCycle() {
-    const dynamicTypingTextElement = document.getElementById('dynamic-typing-text');
-    const cursorElement = document.querySelector('.cursor');
+    const element = document.getElementById('dynamic-typing-text');
+    const cursor = document.querySelector('.cursor');
 
-    if (!dynamicTypingTextElement || !cursorElement) {
-        console.error("Typing animation elements not found. Check your HTML IDs and classes.");
+    if (!element || !cursor) {
+        console.error(
+            "Typing animation elements not found. Check #dynamic-typing-text and .cursor."
+        );
         return;
     }
 
@@ -49,130 +71,135 @@ function typeDeleteCycle() {
 
     if (!isDeleting) {
         if (charIndex === 0) {
+            element.classList.remove('wipe-effect');
             applyPhraseGradient();
-            dynamicTypingTextElement.style.color = '';
         }
 
-        dynamicTypingTextElement.textContent = currentPhrase.substring(0, charIndex);
+        element.textContent = currentPhrase.substring(0, charIndex);
         charIndex++;
 
         if (charIndex > currentPhrase.length) {
-            // Finished typing: pause, then begin deleting
-            setTimeout(() => {
+            typingTimer = setTimeout(() => {
                 isDeleting = true;
                 charIndex = currentPhrase.length;
 
-                dynamicTypingTextElement.classList.add('wipe-effect');
-                dynamicTypingTextElement.style.color = 'transparent';
-
+                // Keep the gradient text visible while deleting.
+                element.classList.remove('wipe-effect');
                 typeDeleteCycle();
             }, pauseTime);
         } else {
-            setTimeout(typeDeleteCycle, typingSpeed);
+            typingTimer = setTimeout(typeDeleteCycle, typingSpeed);
         }
     } else {
-        // Deleting phase
-        dynamicTypingTextElement.textContent = currentPhrase.substring(0, charIndex);
+        element.textContent = currentPhrase.substring(0, charIndex);
         charIndex--;
 
         if (charIndex < 0) {
-            // Move to the next phrase
             isDeleting = false;
             phraseIndex = (phraseIndex + 1) % phrases.length;
             charIndex = 0;
 
-            dynamicTypingTextElement.classList.remove('wipe-effect');
-            dynamicTypingTextElement.style.color = '';
-            dynamicTypingTextElement.style.background = '';
-            dynamicTypingTextElement.style.backgroundSize = '';
-            dynamicTypingTextElement.style.backgroundPosition = '';
+            resetPhraseGradient();
 
-            void dynamicTypingTextElement.offsetWidth;
+            // Force the browser to refresh the text styles.
+            void element.offsetWidth;
 
-            setTimeout(() => {
-                typeDeleteCycle();
-            }, pauseTime);
+            typingTimer = setTimeout(typeDeleteCycle, pauseTime);
         } else {
-            setTimeout(typeDeleteCycle, deletingSpeed);
+            typingTimer = setTimeout(typeDeleteCycle, deletingSpeed);
         }
     }
 }
 
-
 // --- Typing Animation Initialization ---
 
 function initializeTypingAnimation() {
-    const dynamicTypingTextElement = document.getElementById('dynamic-typing-text');
-    const cursorElement = document.querySelector('.cursor');
+    const element = document.getElementById('dynamic-typing-text');
+    const cursor = document.querySelector('.cursor');
 
-    if (dynamicTypingTextElement && cursorElement) {
-        phraseIndex = 0;
-        charIndex = 0;
-        isDeleting = false;
-
-        dynamicTypingTextElement.textContent = '';
-        dynamicTypingTextElement.classList.remove('wipe-effect');
-        dynamicTypingTextElement.style.color = '';
-        dynamicTypingTextElement.style.background = '';
-        dynamicTypingTextElement.style.backgroundSize = '';
-        dynamicTypingTextElement.style.backgroundPosition = '';
-
-        void dynamicTypingTextElement.offsetWidth;
-
-        applyPhraseGradient();
-        typeDeleteCycle();
-    } else {
+    if (!element || !cursor) {
         console.error(
             "Typing animation elements not found. Check for #dynamic-typing-text and .cursor in your HTML."
         );
-    }
-}
-
-
-// --- Page Load / Restore Event Listener ---
-
-window.addEventListener('pageshow', (event) => {
-    console.log('pageshow event fired. Persisted:', event.persisted);
-
-    initializeTypingAnimation();
-});
-
-
-// --- EmailJS Contact Form ---
-
-document.addEventListener("DOMContentLoaded", function() {
-    emailjs.init("enNSaJi9G8hCnI6Rt");
-
-    const form = document.getElementById("contact-form");
-    const statusMessage = document.getElementById("status-message");
-    const spinner = document.getElementById("loadingSpinner");
-    const sendBtn = document.getElementById("sendBtn");
-
-    if (!form || !statusMessage || !spinner || !sendBtn) {
-        console.error("One or more contact form elements were not found.");
         return;
     }
 
-    form.addEventListener("submit", function(e) {
+    // Prevent multiple animation loops if pageshow fires again.
+    if (typingTimer !== null) {
+        clearTimeout(typingTimer);
+        typingTimer = null;
+    }
+
+    phraseIndex = 0;
+    charIndex = 0;
+    isDeleting = false;
+
+    element.textContent = '';
+    element.classList.remove('wipe-effect');
+
+    element.style.backgroundImage = '';
+    element.style.background = '';
+    element.style.backgroundSize = '';
+    element.style.backgroundPosition = '';
+    element.style.backgroundClip = '';
+    element.style.webkitBackgroundClip = '';
+    element.style.color = '';
+    element.style.webkitTextFillColor = '';
+
+    void element.offsetWidth;
+
+    applyPhraseGradient();
+    typeDeleteCycle();
+}
+
+// --- Page Load / Restore Event Listener ---
+
+window.addEventListener('pageshow', () => {
+    initializeTypingAnimation();
+});
+
+// --- EmailJS Contact Form ---
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof emailjs === 'undefined') {
+        console.error('EmailJS library was not loaded.');
+        return;
+    }
+
+    emailjs.init('enNSaJi9G8hCnI6Rt');
+
+    const form = document.getElementById('contact-form');
+    const statusMessage = document.getElementById('status-message');
+    const spinner = document.getElementById('loadingSpinner');
+    const sendBtn = document.getElementById('sendBtn');
+
+    if (!form || !statusMessage || !spinner || !sendBtn) {
+        console.error('One or more contact form elements were not found.');
+        return;
+    }
+
+    form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        spinner.classList.remove("d-none");
+        spinner.classList.remove('d-none');
         sendBtn.disabled = true;
 
-        emailjs.sendForm("service_rnnotqp", "template_qr6qd9d", this)
+        emailjs.sendForm('service_rnnotqp', 'template_qr6qd9d', this)
             .then(() => {
-                statusMessage.innerText = "✅ Message sent successfully!";
-                statusMessage.classList.add("text-success");
-                statusMessage.classList.remove("text-danger");
+                statusMessage.innerText = '✅ Message sent successfully!';
+                statusMessage.classList.add('text-success');
+                statusMessage.classList.remove('text-danger');
                 form.reset();
-            }, (error) => {
-                statusMessage.innerText = "❌ Failed to send message. Please try again.";
-                statusMessage.classList.add("text-danger");
-                statusMessage.classList.remove("text-success");
-                console.error("EmailJS error:", error);
+            })
+            .catch((error) => {
+                statusMessage.innerText =
+                    '❌ Failed to send message. Please try again.';
+                statusMessage.classList.add('text-danger');
+                statusMessage.classList.remove('text-success');
+                console.error('EmailJS error:', error);
             })
             .finally(() => {
-                spinner.classList.add("d-none");
+                spinner.classList.add('d-none');
                 sendBtn.disabled = false;
             });
     });
