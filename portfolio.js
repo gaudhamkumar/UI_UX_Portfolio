@@ -1,12 +1,13 @@
-// --- Global Variables for Typing Animation State ---
-// These need to be accessible by typeDeleteCycle and initializeTypingAnimation
+
+ // --- Global Variables for Typing Animation State ---
 let phraseIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
+let typingTimer = null;
 
-const typingSpeed = 70; // milliseconds per character
-const deletingSpeed = 40; // milliseconds per character
-const pauseTime = 1500; // milliseconds to pause at end of typing / start of deleting
+const typingSpeed = 70;
+const deletingSpeed = 40;
+const pauseTime = 1500;
 
 const phrases = [
     "UI/UX Designer",
@@ -15,45 +16,45 @@ const phrases = [
     "Creating User-Centered Digital Products By Solving Problems."
 ];
 
-// Define your gradients for each phrase (Light Mode)
-const phraseGradients = [
-    'linear-gradient(to right, #007bff, #8a2be2)',    // Blue to Purple
-    'linear-gradient(to right, #28a745, #1e90ff)',    // Green to Dodger Blue
-    'linear-gradient(to right, #ffc107, #ff4500)',    // Yellow to OrangeRed
-    'linear-gradient(to right, #dc3545, #ff1493)'     // Red to DeepPink
+// Text colors only — no background gradients
+const phraseColors = [
+    "#8a2be2", // Purple
+    "#1e90ff", // Blue
+    "#ff8c00", // Orange
+    "#dc3545"  // Red
 ];
 
-// Define your gradients for each phrase (Dark Mode)
-const phraseGradientsDarkMode = [
-    'linear-gradient(to right, #66b3ff, #c792ea)',    // Lighter Blue to Lighter Purple
-    'linear-gradient(to right, #98fb98, #6495ed)',    // Pale Green to Cornflower Blue
-    'linear-gradient(to right, #ffd700, #ff8c00)',    // Gold to DarkOrange
-    'linear-gradient(to right, #ff6347, #ff69b4)'     // Tomato to HotPink
-];
+// --- Apply Text Color Only ---
 
+function applyPhraseColor() {
+    const element = document.getElementById("dynamic-typing-text");
+    if (!element) return;
 
-// --- Helper Functions (defined globally so they can be called from different initializers) ---
+    element.classList.remove("wipe-effect");
 
-function applyPhraseGradient() {
-    const dynamicTypingTextElement = document.getElementById('dynamic-typing-text');
-    if (!dynamicTypingTextElement) return;
+    // Remove all background-based text effects
+    element.style.background = "none";
+    element.style.backgroundImage = "none";
+    element.style.backgroundSize = "auto";
+    element.style.backgroundPosition = "initial";
+    element.style.backgroundClip = "initial";
+    element.style.webkitBackgroundClip = "initial";
+    element.style.webkitTextFillColor = "initial";
 
-    const isDarkMode = document.body.classList.contains('dark-mode');
-    const gradients = isDarkMode ? phraseGradientsDarkMode : phraseGradients;
-
-    dynamicTypingTextElement.style.background = gradients[phraseIndex];
-    dynamicTypingTextElement.style.backgroundSize = '200% 100%';
-    dynamicTypingTextElement.style.backgroundPosition = '0% 0';
+    // Apply a visible solid text color
+    element.style.color = phraseColors[phraseIndex];
 }
 
-function typeDeleteCycle() {
-    const dynamicTypingTextElement = document.getElementById('dynamic-typing-text');
-    const cursorElement = document.querySelector('.cursor'); // Cursor still uses a class
+// --- Typing and Deleting Cycle ---
 
-    if (!dynamicTypingTextElement || !cursorElement) {
-        // Elements not found, likely a timing issue or HTML problem.
-        // Prevent further recursion.
-        console.error("Typing animation elements not found. Stopping cycle.");
+function typeDeleteCycle() {
+    const element = document.getElementById("dynamic-typing-text");
+    const cursor = document.querySelector(".cursor");
+
+    if (!element || !cursor) {
+        console.error(
+            "Typing elements not found. Check #dynamic-typing-text and .cursor."
+        );
         return;
     }
 
@@ -61,168 +62,134 @@ function typeDeleteCycle() {
 
     if (!isDeleting) {
         if (charIndex === 0) {
-            applyPhraseGradient(); // Apply gradient at the start of a new phrase
-            dynamicTypingTextElement.style.color = ''; // Ensure text is not transparent (from wipe-effect)
+            applyPhraseColor();
         }
-        dynamicTypingTextElement.textContent = currentPhrase.substring(0, charIndex);
+
+        // Display the currently typed characters
+        element.textContent = currentPhrase.substring(0, charIndex);
         charIndex++;
 
         if (charIndex > currentPhrase.length) {
-            // Done typing, pause then start deleting
-            setTimeout(() => {
+            // Pause after the complete phrase is displayed
+            typingTimer = setTimeout(() => {
                 isDeleting = true;
                 charIndex = currentPhrase.length;
 
-                dynamicTypingTextElement.classList.add('wipe-effect');
-                dynamicTypingTextElement.style.color = 'transparent'; // Make text transparent for wipe-out
+                // Do not use wipe-effect or transparent text
+                element.classList.remove("wipe-effect");
+                element.style.color = phraseColors[phraseIndex];
 
                 typeDeleteCycle();
             }, pauseTime);
         } else {
-            setTimeout(typeDeleteCycle, typingSpeed);
+            typingTimer = setTimeout(typeDeleteCycle, typingSpeed);
         }
-    } else { // Deleting phase
-        dynamicTypingTextElement.textContent = currentPhrase.substring(0, charIndex);
+    } else {
+        // Delete characters while keeping the remaining text visible
+        element.textContent = currentPhrase.substring(0, charIndex);
+        element.style.color = phraseColors[phraseIndex];
         charIndex--;
 
         if (charIndex < 0) {
-            // Done deleting, move to next phrase after a pause
+            // Move to the next phrase
             isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % phrases.length; // Cycle through phrases
-            charIndex = 0; // Reset charIndex for the new phrase
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            charIndex = 0;
 
-            // Clean up styles for the next typing cycle to ensure gradient appears correctly
-            dynamicTypingTextElement.classList.remove('wipe-effect');
-            dynamicTypingTextElement.style.color = ''; // Reset color
-            dynamicTypingTextElement.style.background = ''; // Clear inline background styles
-            dynamicTypingTextElement.style.backgroundSize = '';
-            dynamicTypingTextElement.style.backgroundPosition = '';
-            void dynamicTypingTextElement.offsetWidth; // Force reflow to clear animation state (important!)
+            element.textContent = "";
+            element.classList.remove("wipe-effect");
 
-            setTimeout(() => {
-                typeDeleteCycle();
-            }, pauseTime);
+            // Apply the next phrase's color before typing starts
+            applyPhraseColor();
+
+            typingTimer = setTimeout(typeDeleteCycle, pauseTime);
         } else {
-            setTimeout(typeDeleteCycle, deletingSpeed);
+            typingTimer = setTimeout(typeDeleteCycle, deletingSpeed);
         }
     }
 }
 
-
-// --- Initialization Functions ---
-
-function initializeThemeToggle() {
-    const themeToggleBtn = document.getElementById('theme-toggle-btn');
-    const sunIcon = document.getElementById('theme-icon-sun');
-    const moonIcon = document.getElementById('theme-icon-moon');
-    const body = document.body;
-
-    function setTheme(isDark) {
-        if (isDark) {
-            body.classList.add('dark-mode');
-            if (sunIcon) sunIcon.style.display = 'none';
-            if (moonIcon) moonIcon.style.display = 'inline-block';
-            localStorage.setItem('theme', 'dark');
-        } else {
-            body.classList.remove('dark-mode');
-            if (sunIcon) sunIcon.style.display = 'inline-block';
-            if (moonIcon) moonIcon.style.display = 'none';
-            localStorage.setItem('theme', 'light');
-        }
-        applyPhraseGradient(); // Update text gradient immediately on theme change
-    }
-
-    // Check for saved theme in localStorage or system preference
-    const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('theme');
-
-    // Apply initial theme
-    if (savedTheme === 'dark' || (!savedTheme && prefersDarkMode)) {
-        setTheme(true);
-    } else {
-        setTheme(false);
-    }
-
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-            const isCurrentlyDarkMode = body.classList.contains('dark-mode');
-            setTheme(!isCurrentlyDarkMode);
-        });
-    } else {
-        console.warn("Theme toggle button not found.");
-    }
-}
+// --- Initialize Typing Animation ---
 
 function initializeTypingAnimation() {
-    const dynamicTypingTextElement = document.getElementById('dynamic-typing-text');
-    const cursorElement = document.querySelector('.cursor');
+    const element = document.getElementById("dynamic-typing-text");
+    const cursor = document.querySelector(".cursor");
 
-    if (dynamicTypingTextElement && cursorElement) {
-        // Reset animation state variables for a fresh start
-        phraseIndex = 0;
-        charIndex = 0;
-        isDeleting = false;
-
-        // Clear any existing text and force re-render before starting new animation
-        dynamicTypingTextElement.textContent = '';
-        dynamicTypingTextElement.classList.remove('wipe-effect'); // Remove any lingering wipe class
-        dynamicTypingTextElement.style.color = ''; // Reset color
-        dynamicTypingTextElement.style.background = ''; // Clear inline background
-        dynamicTypingTextElement.style.backgroundSize = '';
-        dynamicTypingTextElement.style.backgroundPosition = '';
-        void dynamicTypingTextElement.offsetWidth; // Force reflow
-
-        applyPhraseGradient(); // Apply the initial gradient for the first phrase
-        typeDeleteCycle(); // Start the animation cycle
-    } else {
-        console.error("Typing animation elements not found. Cannot start animation.");
+    if (!element || !cursor) {
+        console.error(
+            "Typing elements not found. Check #dynamic-typing-text and .cursor."
+        );
+        return;
     }
+
+    // Prevent duplicate animation loops
+    if (typingTimer !== null) {
+        clearTimeout(typingTimer);
+        typingTimer = null;
+    }
+
+    phraseIndex = 0;
+    charIndex = 0;
+    isDeleting = false;
+
+    element.textContent = "";
+    element.classList.remove("wipe-effect");
+
+    // Remove previous gradient/background styles
+    element.style.background = "none";
+    element.style.backgroundImage = "none";
+    element.style.backgroundSize = "auto";
+    element.style.backgroundPosition = "initial";
+    element.style.backgroundClip = "initial";
+    element.style.webkitBackgroundClip = "initial";
+    element.style.webkitTextFillColor = "initial";
+
+    applyPhraseColor();
+    typeDeleteCycle();
 }
 
+// --- Page Load / Restore ---
 
-// --- Main Event Listener for Page Load/Restore ---
-// Use 'pageshow' for robust initialization, especially with browser bfcache.
-window.addEventListener('pageshow', (event) => {
-    console.log('pageshow event fired. Persisted:', event.persisted);
-
-    // Always initialize theme toggle to ensure correct icon state and background
-    initializeThemeToggle();
-
+window.addEventListener("pageshow", function () {
     initializeTypingAnimation();
 });
 
+// --- EmailJS Contact Form ---
 
+document.addEventListener("DOMContentLoaded", function () {
+    if (typeof emailjs === "undefined") {
+        console.error("EmailJS library was not loaded.");
+        return;
+    }
 
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  emailjs.init("enNSaJi9G8hCnI6Rt");
-   
-
-
+    emailjs.init("enNSaJi9G8hCnI6Rt");
 
     const form = document.getElementById("contact-form");
     const statusMessage = document.getElementById("status-message");
     const spinner = document.getElementById("loadingSpinner");
     const sendBtn = document.getElementById("sendBtn");
 
-    form.addEventListener("submit", function(e) {
+    if (!form || !statusMessage || !spinner || !sendBtn) {
+        console.error("One or more contact form elements were not found.");
+        return;
+    }
+
+    form.addEventListener("submit", function (e) {
         e.preventDefault();
 
-        // Show spinner & disable button
         spinner.classList.remove("d-none");
         sendBtn.disabled = true;
 
-        // Send the form via EmailJS
         emailjs.sendForm("service_rnnotqp", "template_qr6qd9d", this)
             .then(() => {
                 statusMessage.innerText = "✅ Message sent successfully!";
                 statusMessage.classList.add("text-success");
                 statusMessage.classList.remove("text-danger");
                 form.reset();
-            }, (error) => {
-                statusMessage.innerText = "❌ Failed to send message. Please try again.";
+            })
+            .catch((error) => {
+                statusMessage.innerText =
+                    "❌ Failed to send message. Please try again.";
                 statusMessage.classList.add("text-danger");
                 statusMessage.classList.remove("text-success");
                 console.error("EmailJS error:", error);
