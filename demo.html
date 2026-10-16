@@ -1,319 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
 
-/* --- Skills Section Styling --- */
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My UI/UX Portfolio</title>
 
-.skills-section {
-    padding: 90px 0;
-    /* More vertical padding for a grander feel */
-    text-align: center;
-    background-color: #F0F2F5;
-    /* Very light grey background for the section */
-    color: #333333;
-    /* Light mode text color */
-    transition: background-color 0.4s ease, color 0.4s ease;
-    /* Smoother transitions */
-}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 
-.skills-section h2 {
-    font-size: 3.2em;
-    /* Even larger heading */
-    margin-bottom: 60px;
-    /* More space below heading */
-    position: relative;
-    display: inline-block;
-    color:  #4a41f7;
-    /* Deep blue-grey heading for light mode */
-    letter-spacing: 1px;
-    /* Slightly spaced out letters */
-}
-
-.skills-section h2::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -18px;
-    /* Adjust underline position */
-    transform: translateX(-50%);
-    width: 100px;
-    /* Wider underline */
-    height: 6px;
-    /* Thicker underline */
-    background-color: #6C63FF;
-    /* A vibrant purple accent for light mode */
-    border-radius: 4px;
-    transition: background-color 0.4s ease;
-}
-
-.skills-categories {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 50px;
-    /* Increased space between skill categories */
-}
-
-.skill-category {
-    background: linear-gradient(145deg, #FFFFFF, #F0F2F5);
-    /* Subtle gradient for light mode cards */
-    border: none;
-    /* No explicit border, rely on shadow */
-    border-radius: 20px;
-    /* More rounded corners */
-    padding: 30px;
-    /* Generous padding inside category cards */
-    flex: 1 1 calc(50% - 50px);
-    /* Two columns on larger screens */
-    max-width: calc(50% - 25px);
-    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.08), -8px -8px 15px rgba(255, 255, 255, 0.7);
-    /* Neumorphic-like shadow */
-    transition: background 0.4s ease, box-shadow 0.4s ease;
-    display: flex;
-    /* Use flex for internal alignment */
-    flex-direction: column;
-    align-items: center;
-    /* Center content horizontally */
-}
-
-.skill-category h3 {
-    font-size: 2.4em;
-    /* Larger category headings */
-    margin-bottom: 35px;
-    color:  #4a41f7;
-    /* Deep blue-grey heading for light mode */
-    position: relative;
-    letter-spacing: 0.5px;
-}
-
-.skill-category h3::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -12px;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background-color: #4a41f7;
-    /* Accent for category heading underline */
-    transition: background-color 0.4s ease;
-}
-
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    /* Larger min-width for skill cards */
-    gap: 25px;
-    /* More space between skill cards */
-    justify-items: center;
-    width: 100%;
-    /* Ensure grid takes full width of category */
-}
-
-.skill-card {
-    background-color: #E0E2E6;
-    color: #4A5568;
-    padding: 18px 30px;
-    border-radius: 12px;
-    font-size: 1.15em;
-    font-weight: 600;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5), inset -2px -2px 5px rgba(255, 255, 255, 0.7);
-    /* Inner shadow for "pressed" look */
-}
-
-.skill-card:hover {
-    transform: translateY(-3px);
-    /* Subtle lift */
-    background-color: #D1D4D8;
-    /* Slightly darker on hover */
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.8);
-    /* Outer shadow on hover */
-    color: #6C63FF;
-
-}
-
-/* --- Dark Mode for Skills Section --- */
-body.dark-mode .skills-section {
-    background-color: #2A2E33;
-    /* Dark background for the section */
-    color: #E0E0E0;
-    /* Dark mode text color */
-}
-
-body.dark-mode .skills-section h2 {
-    color: #FFFFFF;
-    /* Dark mode heading color */
-}
-
-body.dark-mode .skills-section h2::after {
-    background-color: #9B93FF;
-    /* Dark mode accent color (lighter purple) */
-}
-
-body.dark-mode .skill-category {
-    background: linear-gradient(145deg, #3A4048, #2A2E33);
-    /* Dark mode gradient for cards */
-    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.6), -8px -8px 15px rgba(60, 65, 70, 0.3);
-    /* Darker neumorphic shadow */
-}
-
-body.dark-mode .skill-category h3 {
-    color: #FFFFFF;
-    /* Dark mode heading color */
-}
-
-body.dark-mode .skill-category h3::after {
-    background-color: #9B93FF;
-    /* Dark mode accent for category heading underline */
-}
-
-body.dark-mode .skill-card {
-    background-color: #3D434B;
-    /* Darker base for skill cards in dark mode */
-    color: #C0C5CC;
-    /* Lighter text on skill card in dark mode */
-    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5), inset -2px -2px 5px rgba(60, 65, 70, 0.2);
-    /* Dark inner shadow */
-}
-
-body.dark-mode .skill-card:hover {
-    transform: translateY(-3px);
-    background-color: #4A5158;
-    /* Slightly darker on hover in dark mode */
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5), -4px -4px 10px rgba(60, 65, 70, 0.3);
-    /* Dark outer shadow on hover */
-    color: #9B93FF;
-    /* Accent color on hover in dark mode */
-}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-/* --- Responsive Design for Skills Section --- */
-@media (max-width: 992px) {
-    .skills-section {
-        padding: 70px 0;
-    }
+    <link rel="stylesheet" href="portfolio.css">
+</head>
 
-    .skills-section h2 {
-        font-size: 2.8em;
-        margin-bottom: 50px;
-    }
+<body>
 
-    .skills-section h2::after {
-        width: 90px;
-        height: 5px;
-    }
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Portfolio</a>
 
-    .skills-categories {
-        gap: 40px;
-    }
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    .skill-category {
-        flex: 1 1 calc(50% - 40px);
-        max-width: calc(50% - 20px);
-        padding: 35px;
-        border-radius: 18px;
-    }
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link px-2 py-3" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2 py-3" href="#about-me">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2 py-3" href="#my-skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2 py-3" href="#experience">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2 py-3" href="#certifications">Certifications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2 py-3" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
 
-    .skill-category h3 {
-        font-size: 2em;
-        margin-bottom: 30px;
-    }
+            <button id="theme-toggle-btn" class="btn btn-link text-white ms-5 me-2 p-0 d-flex align-items-center">
+                <i class="fas fa-sun" id="theme-icon-sun"></i> <i class="fas fa-moon" id="theme-icon-moon"
+                    style="display: none;"></i> </button>
+        </div>
+    </nav>
 
-    .skills-grid {
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-        gap: 20px;
-    }
 
-    .skill-card {
-        padding: 15px 25px;
-        font-size: 1.05em;
-        border-radius: 10px;
-    }
-}
+    <main class="hero-section d-flex align-items-center">
+        <div class="container-fluid text-center text-md-start">
+            <div class="row">
+                <div class="col-12 col-md-8 offset-md-1">
+                    <h1> Hi, I'm <span>GAUDHAM KUMAR</span></h1>
+                    <div class="typing-animation-container">
+                        <p class="lead typed-text" id="dynamic-typing-text"></p><span class="cursor">|</span>
+                    </div>
+                    <div class="container-fluid">
+                        <p>I’m a UI/UX Designer focused on crafting intuitive and visually engaging digital experiences. 
+                            I turn complex problems into simple, effective solutions through user flows, wireframing, 
+                            prototyping, and interface design, balancing user needs with business objectives.</p>
+                    </div>
 
-@media (max-width: 768px) {
-    .skills-section {
-        padding: 60px 0;
-    }
+                    <div class="hero-buttons mt-4">
+                        <a href="#my-projects" class="btn btn-primary me-3">
+                           View Projects
+                        </a>
 
-    .skills-section h2 {
-        font-size: 2.5em;
-        margin-bottom: 40px;
-    }
+                        <a href="assets/resume/Gaudham_Kumar_K_UI_UX_Designer_Resume.pdf"
+                            target="_blank"
+                            class="btn btn-outline-primary">
+                            Download Resume
+                        </a>
+                    </div>
 
-    .skills-section h2::after {
-        width: 80px;
-        bottom: -15px;
-    }
+                </div>
+                <div class="col-12 col-md-3 hero-image-container">
 
-    .skills-categories {
-        gap: 30px;
-    }
+                    <img src="assets/hero image 2.png"
+                       alt="UI UX Designer"
+                       class="hero-image hero-left">
 
-    .skill-category {
-        flex: 1 1 90%;
-        /* Single column on smaller screens */
-        max-width: 90%;
-        padding: 30px;
-        border-radius: 15px;
-    }
+                    <img src="assets/hero image 1.png"
+                       alt="UI UX Designer"
+                       class="hero-image hero-center">
 
-    .skill-category h3 {
-        font-size: 1.8em;
-        margin-bottom: 25px;
-    }
+                    <img src="assets/hero image 3.png"
+                       alt="UI UX Designer"
+                       class="hero-image hero-right">
 
-    .skill-category h3::after {
-        bottom: -10px;
-    }
+                </div>
+                
+            </div>
+            
+        </div>
+    </main>
 
-    .skills-grid {
-        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-        gap: 18px;
-    }
 
-    .skill-card {
-        padding: 12px 20px;
-        font-size: 1em;
-    }
-}
 
-@media (max-width: 480px) {
-    .skills-section {
-        padding: 50px 0;
-    }
+<section class="about-section" id="about-me" aria-labelledby="about-heading">
+    <div class="container">
+        <div class="about-layout">
+            <div class="about-intro">
+                <p class="about-label">About</p>
+                <h2 id="about-heading">Designing with clarity and purpose.</h2>
+                <figure class="about-figure">
+                    <img src="assets/my image.jpeg" alt="Portrait of Gaudham Kumar" class="about-image">
+                    <figcaption>Gaudham Kumar<span>UI/UX Designer</span></figcaption>
+                </figure>
+            </div>
 
-    .skills-section h2 {
-        font-size: 2.2em;
-        margin-bottom: 30px;
-    }
+            <div class="about-body">
+                <p>I’m a UI/UX Designer focused on creating intuitive, visually engaging digital experiences.
+                    I turn complex problems into simple, <strong class="about-highlight">user-centered solutions</strong> through user flows, wireframing,
+                    prototyping, information architecture, and UI design. I enjoy combining user needs, business goals,
+                    and thoughtful visual design to create practical digital products.</p>
 
-    .skills-section h2::after {
-        width: 70px;
-        height: 4px;
-    }
+                <p>I continuously explore design trends, usability principles, and emerging technologies to
+                    strengthen my design skills. I’m particularly interested in creating clear, functional,
+                    and consistent experiences while continuously learning and improving my design approach.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-    .skill-category {
-        padding: 25px;
-        border-radius: 12px;
-    }
 
-    .skill-category h3 {
-        font-size: 1.6em;
-        margin-bottom: 20px;
-    }
 
-    .skill-category h3::after {
-        bottom: -8px;
-    }
+<section class="skills-section" id="my-skills" aria-labelledby="skills-heading">
+    <div class="container">
+        <header class="skills-header">
+            <h2 id="skills-heading">My Skills</h2>
+            <p class="skills-intro">Design skills and tools I use to turn ideas into clear, functional digital experiences.</p>
+        </header>
 
-    .skills-grid {
-        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-        gap: 15px;
-    }
+        <div class="skills-groups">
+            <div class="skills-group">
+                <h3 class="skills-group-title">UX Design</h3>
+                <ul class="skills-list">
+                    <li class="skill-chip">User Flows</li>
+                    <li class="skill-chip">Wireframing</li>
+                    <li class="skill-chip">Prototyping</li>
+                    <li class="skill-chip">Information Architecture</li>
+                    <li class="skill-chip">Usability Principles</li>
+                    <li class="skill-chip">User Personas</li>
+                </ul>
+            </div>
 
-    .skill-card {
-        padding: 10px 15px;
-        font-size: 0.9em;
-        border-radius: 8px;
-    }
-}
+            <div class="skills-group">
+                <h3 class="skills-group-title">UI &amp; Visual Design</h3>
+                <ul class="skills-list">
+                    <li class="skill-chip">Visual Design</li>
+                    <li class="skill-chip">Responsive Design</li>
+                    <li class="skill-chip">Design Systems</li>
+                    <li class="skill-chip">Typography</li>
+                    <li class="skill-chip">Color</li>
+                    <li class="skill-chip">Accessibility</li>
+                    <li class="skill-chip">Components &amp; Variants</li>
+                    <li class="skill-chip">Variables &amp; Tokens</li>
+                </ul>
+            </div>
+
+            <div class="skills-group">
+                <h3 class="skills-group-title">Tools</h3>
+                <ul class="skills-list">
+                    <li class="skill-chip">Figma</li>
+                    <li class="skill-chip">Canva</li>
+                    <li class="skill-chip">Framer</li>
+                    <li class="skill-chip">Notion</li>
+                    <li class="skill-chip">Penpot</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+    <section class="experience-section" id="experience">
+    <div class="container">
+
+        <h2>Experience</h2>
+
+        <div class="experience-timeline">
+
+            <!-- Experience 1 -->
+            <div class="experience-card">
+                <div class="experience-header">
+                    <h3>UI/UX Designer Intern</h3>
+                    <span>Mar 2026 - Jun 2026</span>
+                </div>
+
+                <h4>Duhzine IT Solutions</h4>
+
+                <ul>
+                    <li>Designed wireframes, high-fidelity user interfaces, and interactive prototypes for responsive web and mobile applications based on real client requirements.</li>
+
+                    <li>Worked on multiple live client projects across healthcare, fitness, real estate, photography and e-learning, delivering production-ready UI designs and redesign solutions.</li>
+
+                    <li>Conducted competitor analysis, usability reviews, and design improvements to enhance user experience, accessibility, and interface consistency.</li>
+
+                    <li>Created reusable UI components and design systems to maintain consistency and improve design scalability across projects.</li>
+
+                    <li>Presented design concepts, prepared design documentation, and collaborated with stakeholders throughout design reviews and project iterations.</li>
+                </ul>
+            </div>
+
+            <!-- Experience 2 -->
+            <div class="experience-card">
+                <div class="experience-header">
+                    <h3>UI/UX Designer (Shopify)</h3>
+                    <span>Aug 2024 - Mar 2026</span>
+                </div>
+
+                <h4>Indian Gardens, Pondicherry</h4>
+
+                <ul>
+                   <li>Designed, maintained, and enhanced live e-commerce website pages with a focus on usability, responsive layouts, visual consistency, and user experience.</li>
+
+                   <li>Customized Shopify themes, storefront layouts, and interface components while implementing UI improvements and redesigns based on business requirements.</li>
+
+                   <li>Designed and updated product pages, promotional banners, landing pages, and website content to improve customer engagement and support conversion goals.</li>
+
+                   <li>Collaborated with stakeholders to deliver UI enhancements, feature updates, and website improvements for live production websites.</li>
+
+                   <li>Improved website navigation, information architecture, and content organization to create a more intuitive browsing experience.</li>
+
+                   <li>Managed product listings, customer orders, and digital storefront operations across Amazon, Flipkart, and Meesho while maintaining content quality and consistency.</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+
+<section class="projects-section" id="my-projects">
+    <div class="project-container">
+        <h2>My Projects</h2>
+
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image-wrapper">
+                    <img src="assets/project 1.png" alt="Project One Image"
+                        class="project-image">
+                </div>
+                <div class="project-content">
+                    <h3>Finanace Management Application - (Money Mate)</h3>
+                    <p>Helped first-time earners understand where their money goes by designing 
+                        financial dashboards, spending and savings flows, and the Money Mood Indicator
+                        to make financial behaviour easier to recognize and act on.</p>
+
+                    <div class="project-tags">
+                        <span class="project-tag">UI</span>
+                        <span class="project-tag">Mobile App</span>
+                        <span class="project-tag">UX</span>
+                        <span class="project-tag">Finance App</span>
+                        <span class="project-tag">Figma</span>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="assets/resume/Project_Money_Mate_UI_Gallery.pdf" class="btn live-demo-btn"
+                            target="_blank">UI Gallery</a>
+                        <a href="https://www.behance.net/gallery/249040501/MoneyMate-A-Financial-App-for-First-Time-Earners" class="btn github-btn"
+                            target="_blank">View Case Study</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image-wrapper">
+                    <img src="assets/project 2.png" alt="Project Two Image"
+                        class="project-image">
+                </div>
+                <div class="project-content">
+                    <h3>Fitness Coaching Landing Page - (FitMentor)</h3>
+                    <p>Improved the clarity of a fitness coaching service by structuring its offerings,
+                        benefits, and calls to action through information architecture and visual hierarchy,
+                        creating a clearer path for visitors from discovering the service to taking action.</p>
+
+                    <div class="project-tags">
+                        <span class="project-tag">UI Design</span>
+                        <span class="project-tag">Landing Page</span>
+                        <span class="project-tag">Fitness</span>
+                        <span class="project-tag">Responsive</span>
+                        <span class="project-tag">Figma</span>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="assets/resume/Project_Fit_Mentor_UI_Gallery.pdf" class="btn live-demo-btn"
+                            target="_blank">UI Gallery</a>
+                        <a href="https://www.behance.net/gallery/250077261/FitMentor-Fitness-Coaching-Landing-Page-Case-Study" class="btn github-btn"
+                            target="_blank">View Case study</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image-wrapper">
+                    <img src="assets/Section - Application Screens Preview.png" alt="Project Three Image"
+                        class="project-image">
+                </div>
+                <div class="project-content">
+                    <h3>Single-Restaurant Food Ordering App - (Burger Day)</h3>
+                    <p>Simplified the challenge of ordering multiple burgers with different preferences by designing 
+                        item-level customization within a low-step ordering flow, allowing users to customize each burger
+                        individually while moving smoothly from browsing to payment and order tracking.
+                    </p>
+
+                    <div class="project-tags">
+                        <span class="project-tag">UI Design</span>
+                        <span class="project-tag">Food-Ordering</span>
+                        <span class="project-tag">UX Design</span>
+                        <span class="project-tag">Mobile App</span>
+                        <span class="project-tag">Figma</span>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="assets/resume/Burger_Day_UI_Gallery.pdf" class="btn live-demo-btn"
+                            target="_blank">UI Gallery</a>
+                        <a href="https://www.behance.net/gallery/256318043/Burger-Day-Single-Restaurant-Food-Ordering-App" class="btn github-btn"
+                            target="_blank">View Case Study</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="view-more-container">
+            <a href="project.html" class="btn view-more-btn">
+                View More Projects
+                <span aria-hidden="true">&rarr;</span>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+    <section class="certifications-section" id="certifications">
+
+    <div class="container">
+
+        <h2>Certifications & Recognition</h2>
+
+        <div class="certifications-grid">
+
+            <!-- Internship Certificate -->
+
+            <div class="certificate-card">
+
+                <div class="certificate-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+
+                <h3>UI/UX Internship Certificate</h3>
+
+                <p>
+                    Official internship completion certificate awarded by
+                    Duhzine IT Solutions for UI/UX Design Internship.
+                </p>
+
+                <a href="assets/resume/Gaudham Kumar Intern Certificate.pdf"
+                    target="_blank"
+                    class="certificate-btn">
+                    View Certificate
+                </a>
+
+            </div>
+
+            <!-- LOR -->
+
+            <div class="certificate-card">
+
+                <div class="certificate-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+
+                <h3>Letter of Recommendation</h3>
+
+                <p>
+                    Recommendation letter recognizing my contribution,
+                    performance, and professional growth during the internship.
+                </p>
+
+                <a href="assets/resume/Gaudham Kumar Intern LOR.pdf"
+                    target="_blank"
+                    class="certificate-btn">
+                    View LOR
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+   
+<!-- Contact Section -->
+<section id="contact" class="contact-section py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Get In Touch</h2>
+    <p class="text-center mb-5">
+      Have a project in mind or just want to say hello? I'd love to hear from you!
+      Feel free to reach out using the form below or connect through my direct links.
+    </p>
+
+    <div class="row g-5">
+      <!-- Contact Form -->
+      <div class="col-md-7">
+        <form id="contact-form" class="p-4 border rounded shadow-sm bg-light">
+          <div class="mb-3">
+            <label for="name" class="form-label">Your Name</label>
+            <input type="text" id="name" name="from_name" class="form-control" required placeholder="Your Name">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Your Email</label>
+            <input type="email" id="email" name="from_email" class="form-control" required placeholder="your.email@example.com">
+          </div>
+          <div class="mb-3">
+            <label for="subject" class="form-label">Subject</label>
+            <input type="text" id="subject" name="subject" class="form-control" required placeholder="Subject of your message">
+          </div>
+          <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" name="message" rows="6" class="form-control" required placeholder="Your message here..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100" id="sendBtn">Send Message</button>
+
+          <!-- Spinner -->
+          <div class="text-center mt-3">
+            <div class="spinner-border text-primary d-none" role="status" id="loadingSpinner">
+              <span class="visually-hidden">Sending...</span>
+            </div>
+          </div>
+
+          <!-- Status Message -->
+          <p id="status-message" class="text-center mt-3 fw-bold"></p>
+        </form>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-5">
+        <div class="p-4 border rounded shadow-sm bg-white h-100">
+          <h3>Connect with me directly:</h3>
+          <div class="mt-3">
+            <p><i class="fas fa-envelope me-2"></i>
+              <a href="mailto:gauthamkumark11@gmail.com">gauthamkumark11@gmail.com</a>
+            </p>
+            <p><i class="fab fa-linkedin"></i>
+                <a href="www.linkedin.com/in/gaudham-kumar-80a577290" target="_blank">LinkedIn Profile</a>
+            </p>
+            <p><i class="fab fa-behance"></i>
+              <a href="https://www.behance.net/gauthamkumark" target="_blank">Behance Profile</a>
+            </p>
+            <p><i class="fab fa-github me-2"></i>
+              <a href="https://github.com/gaudhamkumar" target="_blank">GitHub Profile</a>
+            </p>
+            <p><i class="fas fa-map-marker-alt me-2"></i>
+                Pondicherry, India
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+        
+
+
+    <script src="portfolio.js"></script>
+</body>
+
+</html>
