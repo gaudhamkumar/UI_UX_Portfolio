@@ -112,58 +112,6 @@ function typeDeleteCycle() {
     }
 }
 
-
-// --- Initialization Functions ---
-
-function initializeThemeToggle() {
-    const themeToggleBtn = document.getElementById('theme-toggle-btn');
-    const sunIcon = document.getElementById('theme-icon-sun');
-    const moonIcon = document.getElementById('theme-icon-moon');
-    const body = document.body;
-
-    function setTheme(isDark) {
-        if (isDark) {
-            body.classList.add('dark-mode');
-            if (sunIcon) sunIcon.style.display = 'none';
-            if (moonIcon) moonIcon.style.display = 'inline-block';
-            localStorage.setItem('theme', 'dark');
-        } else {
-            body.classList.remove('dark-mode');
-            if (sunIcon) sunIcon.style.display = 'inline-block';
-            if (moonIcon) moonIcon.style.display = 'none';
-            localStorage.setItem('theme', 'light');
-        }
-
-        applyPhraseGradient();
-    }
-
-    // Check saved theme or system preference
-    const prefersDarkMode = window.matchMedia &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    const savedTheme = localStorage.getItem('theme');
-
-    // Apply initial theme
-    if (savedTheme === 'dark' || (!savedTheme && prefersDarkMode)) {
-        setTheme(true);
-    } else {
-        setTheme(false);
-    }
-
-    // Prevent adding the same click listener more than once
-    if (themeToggleBtn && !themeToggleBtn.dataset.themeListenerAdded) {
-        themeToggleBtn.dataset.themeListenerAdded = 'true';
-
-        themeToggleBtn.addEventListener('click', () => {
-            const isCurrentlyDarkMode = body.classList.contains('dark-mode');
-            setTheme(!isCurrentlyDarkMode);
-        });
-    } else if (!themeToggleBtn) {
-        console.warn("Theme toggle button not found.");
-    }
-}
-
-
 function initializeTypingAnimation() {
     const dynamicTypingTextElement = document.getElementById('dynamic-typing-text');
     const cursorElement = document.querySelector('.cursor');
