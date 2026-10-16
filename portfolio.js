@@ -15,20 +15,12 @@ const phrases = [
     "Creating User-Centered Digital Products By Solving Problems."
 ];
 
-// Define your gradients for each phrase (Light Mode)
+// Gradients for each phrase
 const phraseGradients = [
     'linear-gradient(to right, #007bff, #8a2be2)',
     'linear-gradient(to right, #28a745, #1e90ff)',
     'linear-gradient(to right, #ffc107, #ff4500)',
     'linear-gradient(to right, #dc3545, #ff1493)'
-];
-
-// Define your gradients for each phrase (Dark Mode)
-const phraseGradientsDarkMode = [
-    'linear-gradient(to right, #66b3ff, #c792ea)',
-    'linear-gradient(to right, #98fb98, #6495ed)',
-    'linear-gradient(to right, #ffd700, #ff8c00)',
-    'linear-gradient(to right, #ff6347, #ff69b4)'
 ];
 
 // Prevent multiple typing animation loops
@@ -39,12 +31,10 @@ let typingTimer = null;
 
 function applyPhraseGradient() {
     const dynamicTypingTextElement = document.getElementById('dynamic-typing-text');
+
     if (!dynamicTypingTextElement) return;
 
-    const isDarkMode = document.body.classList.contains('dark-mode');
-    const gradients = isDarkMode ? phraseGradientsDarkMode : phraseGradients;
-
-    dynamicTypingTextElement.style.background = gradients[phraseIndex];
+    dynamicTypingTextElement.style.background = phraseGradients[phraseIndex];
     dynamicTypingTextElement.style.backgroundSize = '200% 100%';
     dynamicTypingTextElement.style.backgroundPosition = '0% 0';
 }
@@ -65,7 +55,7 @@ function typeDeleteCycle() {
     const currentPhrase = phrases[phraseIndex];
 
     if (!isDeleting) {
-        // Apply gradient and reset text visibility at the start of a phrase
+        // Start typing a new phrase
         if (charIndex === 0) {
             applyPhraseGradient();
             dynamicTypingTextElement.classList.remove('wipe-effect');
@@ -76,7 +66,7 @@ function typeDeleteCycle() {
         dynamicTypingTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
         charIndex++;
 
-        // Pause when the complete phrase has been typed
+        // Pause after the complete phrase is typed
         if (charIndex >= currentPhrase.length) {
             typingTimer = setTimeout(() => {
                 isDeleting = true;
@@ -87,12 +77,12 @@ function typeDeleteCycle() {
         }
 
     } else {
-        // Remove one character at a time
+        // Delete one character at a time
         dynamicTypingTextElement.textContent = currentPhrase.substring(0, charIndex - 1);
         charIndex--;
 
         if (charIndex <= 0) {
-            // Prepare the next phrase
+            // Move to the next phrase
             charIndex = 0;
             isDeleting = false;
             phraseIndex = (phraseIndex + 1) % phrases.length;
@@ -111,6 +101,9 @@ function typeDeleteCycle() {
         }
     }
 }
+
+
+// --- Initialize Typing Animation ---
 
 function initializeTypingAnimation() {
     const dynamicTypingTextElement = document.getElementById('dynamic-typing-text');
@@ -140,19 +133,17 @@ function initializeTypingAnimation() {
     dynamicTypingTextElement.style.backgroundSize = '';
     dynamicTypingTextElement.style.backgroundPosition = '';
 
-    // Apply the first phrase's gradient and start typing
+    // Start typing the first phrase
     applyPhraseGradient();
     typeDeleteCycle();
 }
 
 
-// --- Main Event Listener for Page Load/Restore ---
+// --- Page Load / Restore Event Listener ---
 
 window.addEventListener('pageshow', (event) => {
     console.log('pageshow event fired. Persisted:', event.persisted);
 
-    // Initialize theme toggle and typing animation
-    initializeThemeToggle();
     initializeTypingAnimation();
 });
 
